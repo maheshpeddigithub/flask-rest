@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-flask-rest
+spec:
+  selector:
+    matchLabels:
+      app: k8s-flask-rest
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: k8s-flask-rest
+        env: development
+    spec:
+      containers:
+        - name: k8s-flask-rest
+          image: eu.gcr.io/ssil1-258911/flask-rest:v1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-flask-rest-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: k8s-flask-rest

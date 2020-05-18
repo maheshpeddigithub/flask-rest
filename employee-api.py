@@ -86,4 +86,4 @@ def delete_employee(employee_id):
     return jsonify( { 'employee-deleted': True } )
     
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, host='0.0.0.0')
